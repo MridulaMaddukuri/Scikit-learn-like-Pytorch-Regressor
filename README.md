@@ -28,19 +28,41 @@ class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
 
         use_cuda : Boolean, default = False. Set to True to enable CUDA
 
-### Attributes
-
-
-
-
 
 ### Methods
 
 fit
+
+    def fit(self,X,y,validation_data=None, validation_split=0.25, early_stop = True): 
+    	"""
+        Fit pytorch model.
+        
+        Parameters
+        ----------
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_features)
+            Training data
+        y : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_output)
+            Target values. Should be same as X's dtype 
+
+        validation_split : float or optional. if float, should be a value between 0.00 and 1.00.
+                           Default value is 0.25. 
+
+        validation_data : Pytorch tensor or Numpy ndarray or Pandas DataFrame, 
+                          assign if an additional validation data is available.
+
+        early_stop : Boolean, 
+
+        Returns
+        -------
+        self: Returns an instance of self
+
 predict 
 score
 get_params
 
+
+
+### Attributes
 
 
 
