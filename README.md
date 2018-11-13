@@ -1,4 +1,4 @@
-# Scikit-learn like Pytorch Regressor
+# Scikit-learn style Pytorch Regressor
 
 
 A pytorch regressor that mimics scikit-learn objects 
