@@ -4,9 +4,8 @@
 A pytorch regressor that mimics scikit-learn objects 
 
 
-class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
-                        max_epoch = 10^5, tenacity = 5, use_cuda = False)
-
+`python PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
+                        max_epoch = 10^5, tenacity = 5, use_cuda = False)`
 ### Parameters
 
         n_feature : int, number of input features.
