@@ -31,10 +31,10 @@ class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
 
 ### Methods
 
-fit
+#### _fit_
 
-    def fit(self,X,y,validation_data=None, validation_split=0.25, early_stop = True): 
-    	"""
+    fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
+    	  
         Fit pytorch model.
         
         Parameters
@@ -56,13 +56,53 @@ fit
         -------
         self: Returns an instance of self
 
-predict 
-score
-get_params
+
+#### _score_
+
+    score(X,y)
+        
+        Returns the adjusted R^2 of the prediction.
+        
+        Parameters
+        ----------
+        X : Pytorch tensor, shape (*, n_features)
+        y : Pytorch tensor, shape (*, 1)
+            True values for X.
+
+        Returns
+        -------
+        score : float
+            Adjusted R^2.
+    
+
+#### _predict_ 
+
+
+    predict(X):
+        
+        Predict using the trained network
+        
+        Parameters: 
+        ------------
+        X : Pytorch tensor, shape (*, n_features)
+            
+        Returns
+        ---------
+        Numpy ndarray of predictions of X.
+
+
+#### _get_params_
+      
+     get_params(deep = True)
+     
+        Get params of the regressor
+        
 
 
 
 ### Attributes
+     Rsq : R^2 of the model
+     
 
 
 
