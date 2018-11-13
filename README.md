@@ -66,8 +66,8 @@ PR.score(X,y)
         
         Parameters
         ----------
-        X : Pytorch tensor, shape (*, n_features)
-        y : Pytorch tensor, shape (*, 1)
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_features)
+        y : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, 1)
             True values for X.
 
         Returns
