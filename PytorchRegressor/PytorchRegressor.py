@@ -59,8 +59,33 @@ class Net(torch.nn.Module):
         	m.bias.data.fill_(0.01)
 
 class PytorchRegressor(BaseEstimator):
-    def __init__(self,n_feature,h_sizes, fit_intercept=True, seed = 42, 
-                  batch_size=64, use_cuda =False, max_epoch = 10**5, tenacity = 5, lr = 0.001,momentum=0):
+    def __init__(self,n_feature,h_sizes, batch_size=64, max_epoch = 10**5, tenacity = 5, lr = 0.001,use_cuda =False):
+        """
+
+        Scikit-Learn like Pytorch Regressor
+
+
+        Parameters
+        ----------
+        
+        n_feature : int, number of input features 
+
+        h_sizes : list of integers
+                Length of list is the number of hidden layers
+                Elements of list are the number of neurons in each hidden layer
+                ex: [4,5,6]  ~ three hidden layers with 4,5,6 neurons respectively 
+
+        batch_size : int, default = 64
+
+        max_epoch : int, upper limit of no. of epochs. Default = 10**5
+
+        tenacity : int, default = 5 
+
+        lr : learning rate, float. default = 0.001
+
+        use_cuda : Boolean, default = False. Set to True to enable CUDA
+
+        """
         self.n_feature = n_feature
         self.h_sizes = h_sizes
         self.net = Net(self.n_feature,self.h_sizes,1)
@@ -71,11 +96,25 @@ class PytorchRegressor(BaseEstimator):
         self.tenacity = tenacity  
         self.batch_size = batch_size
         self.lr = lr
-        self.momentum = momentum
+
         
         
         
     def _convert_to_tensor(self,X, variable = True):
+        """
+        Convert to FloatTensor
+
+        Parameters
+        ----------
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame
+        variable :  Boolean, Default = True. Convert a tensor to variable 
+
+
+        Returns
+        -------
+        X: Pytorch FloatTensor
+
+        """
         if type(X) == torch.FloatTensor: # isinstance(X, torch.FloatTensor):
             tensor_ = X     
         elif type(X) == pd.DataFrame:
@@ -94,27 +133,44 @@ class PytorchRegressor(BaseEstimator):
     def _initialize_optimizer(self):
     	"""
     	Initialize the optimizer
-    	Default : torch.optim.SGD().
+
+    	Default : torch.optim.SGD()
     	
     	"""
         self.optimizer = torch.optim.Adam(self.net.parameters(), self.lr)
 
+    
     def _initialize_lossfunc(self):
     	"""
-    	Initialize a loss function 
+    	Initialize a loss function using method normalized_loss
 
     	"""
         #self.loss_func = torch.nn.MSELoss()
         self.loss_func = self.normalized_loss
 
     def normalized_loss(self,pred,y):
+        """
+        Define normalized loss
+
+        Parameters
+        ----------
+        pred : predicted values from predict method
+
+        y : actual values (ground truth)
+
+        Returns
+        -------
+
+        L1Loss function
+
+        """
     	l1 = torch.nn.L1Loss()
     	if torch.abs(y.data).mean() > 0:
     		return l1(pred,y)/torch.abs(y.data).mean()
     	else:
     		return l1(pred,y)
         
-    def prepare_split(self, X, y, validation_data, validation_split = 0.25):
+    def prepare_split(self, X, y, validation_data, validation_split):
         """
         Prepare validation data.
         
@@ -132,6 +188,7 @@ class PytorchRegressor(BaseEstimator):
 
 
         Assign value to either validation_split or validation_data
+        
         """
         assert validation_split or validation_data, "Assign Value to either validation_split or validation_data" # Only one of the two can be none
         if validation_data is not None:
@@ -149,7 +206,7 @@ class PytorchRegressor(BaseEstimator):
         return trainX, trainy, devX, devy
 
 
-    def fit(self,X,y,validation_data=None, validation_split=None, early_stop = True): 
+    def fit(self,X,y,validation_data=None, validation_split=0.25, early_stop = True): 
     	"""
         Fit pytorch model.
         
@@ -160,9 +217,17 @@ class PytorchRegressor(BaseEstimator):
         y : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_output)
             Target values. Should be same as X's dtype 
 
+        validation_split : float or optional. if float, should be a value between 0.00 and 1.00.
+                           Default value is 0.25. 
+
+        validation_data : Pytorch tensor or Numpy ndarray or Pandas DataFrame, assign if an additional validation data is available.
+
+        early_stop : Boolean, 
+
         Returns
         -------
         self: Returns an instance of self
+
         """
         self.X = self._convert_to_tensor(X)
         self.y = self._convert_to_tensor(y)
@@ -235,7 +300,7 @@ class PytorchRegressor(BaseEstimator):
         """
         Parameters: 
         ------------
-        X : Pytorch tensor, shape (*, n_features)
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_features)
             
         Returns
         ---------
@@ -257,8 +322,8 @@ class PytorchRegressor(BaseEstimator):
 
         Parameters
         ----------
-        X : Pytorch tensor, shape (*, n_features)
-        y : Pytorch tensor, shape (*, 1)
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_features)
+        y : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, 1)
             True values for X.
 
         Returns
@@ -266,6 +331,8 @@ class PytorchRegressor(BaseEstimator):
         score : float
             Adjusted R^2.
         """
+        X = self._convert_to_tensor(X)
+        y = self._convert_to_tensor(y)
         predicted = self.net(X)
         TSS = (y -y.mean()).pow(2).sum()
         RSS = (y -predicted).pow(2).sum()
