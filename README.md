@@ -50,11 +50,8 @@ class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
         validation_data : Pytorch tensor or Numpy ndarray or Pandas DataFrame, 
                           assign if an additional validation data is available.
 
-        early_stop : Boolean, 
+        early_stop : Boolean, default = True 
 
-        Returns
-        -------
-        self: Returns an instance of self
 
 
 #### _score_
