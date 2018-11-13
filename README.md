@@ -4,8 +4,9 @@
 A pytorch regressor that mimics scikit-learn objects 
 
 
-```python PR = PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
-                        max_epoch = 10^5, tenacity = 5, use_cuda = False)```
+```python 
+PR = PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001, max_epoch = 10^5, tenacity = 5, use_cuda = False)
+ ```
 ### Parameters
 
         n_feature : int, number of input features.
@@ -32,7 +33,9 @@ A pytorch regressor that mimics scikit-learn objects
 
 #### _fit_
 
-    ```python PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True) ```
+```python 
+PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
+ ```
     	  
         Fit pytorch model.
         
