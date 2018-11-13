@@ -5,7 +5,7 @@ A pytorch regressor that mimics scikit-learn objects
 
 
 ```python 
-PR = PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001, max_epoch = 10^5, tenacity = 5, use_cuda = False)
+PR = PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001, max_epoch = 1e5, tenacity = 5, use_cuda = False)
  ```
 ### Parameters
 
@@ -58,7 +58,9 @@ PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
 
 #### _score_
 
-    ```python PR.score(X,y) ```
+```python 
+PR.score(X,y) 
+```
         
         Returns the adjusted R^2 of the prediction.
         
@@ -77,7 +79,9 @@ PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
 #### _predict_ 
 
 
-    ```python PR.predict(X)```
+```python 
+PR.predict(X)
+```
         
         Predict using the trained network
         
@@ -92,8 +96,9 @@ PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
 
 #### _get_params_
       
-     get_params(deep = True)
-     
+```python
+get_params(deep = True)
+```     
         Get params of the regressor
         
 
