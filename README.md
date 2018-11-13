@@ -1,4 +1,4 @@
-## Scikit-learn like Pytorch Regressor
+# Scikit-learn like Pytorch Regressor
 
 
 A pytorch regressor that mimics scikit-learn objects 
@@ -7,7 +7,7 @@ A pytorch regressor that mimics scikit-learn objects
 class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
                         max_epoch = 10^5, tenacity = 5, use_cuda = False)
 
-# Parameters
+### Parameters
 
         n_feature : int, number of input features.
                     if X is the input data then n_feature = X.shape[0]
@@ -28,13 +28,13 @@ class PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
 
         use_cuda : Boolean, default = False. Set to True to enable CUDA
 
-# Attributes
+### Attributes
 
 
 
 
 
-# Methods
+### Methods
 
 fit
 predict 
