@@ -4,8 +4,8 @@
 A pytorch regressor that mimics scikit-learn objects 
 
 
-`python PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
-                        max_epoch = 10^5, tenacity = 5, use_cuda = False)`
+```python PR = PytorchRegressor(n_feature, h_sizes, batch_size=64, lr=0.001,
+                        max_epoch = 10^5, tenacity = 5, use_cuda = False)```
 ### Parameters
 
         n_feature : int, number of input features.
@@ -32,7 +32,7 @@ A pytorch regressor that mimics scikit-learn objects
 
 #### _fit_
 
-    fit(X,y,validation_data=None, validation_split=0.25, early_stop = True)
+    ```python PR.fit(X,y,validation_data=None, validation_split=0.25, early_stop = True) ```
     	  
         Fit pytorch model.
         
@@ -44,7 +44,7 @@ A pytorch regressor that mimics scikit-learn objects
             Target values. Should be same as X's dtype 
 
         validation_split : float or optional. if float, should be a value between 0.00 and 1.00.
-                           Default value is 0.25. 
+                           Default value is 0.25. Fraction of data to be used for validation (early stopping)
 
         validation_data : Pytorch tensor or Numpy ndarray or Pandas DataFrame, 
                           assign if an additional validation data is available.
@@ -55,7 +55,7 @@ A pytorch regressor that mimics scikit-learn objects
 
 #### _score_
 
-    score(X,y)
+    ```python PR.score(X,y) ```
         
         Returns the adjusted R^2 of the prediction.
         
@@ -74,13 +74,13 @@ A pytorch regressor that mimics scikit-learn objects
 #### _predict_ 
 
 
-    predict(X):
+    ```python PR.predict(X)```
         
         Predict using the trained network
         
         Parameters: 
         ------------
-        X : Pytorch tensor, shape (*, n_features)
+        X : Pytorch tensor or Numpy ndarray or Pandas DataFrame, shape (n_samples, n_features)
             
         Returns
         ---------
